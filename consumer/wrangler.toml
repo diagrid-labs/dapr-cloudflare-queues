@@ -1,0 +1,7 @@
+name = "consumer"
+main = "src/index.ts"
+compatibility_date = "2023-02-01"
+
+[[queues.consumers]]
+ queue = "dapr-messages"
+ max_batch_size = 1

@@ -1,0 +1,31 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: cloudflare-queues
+spec:
+  type: bindings.cloudflare.queues
+  version: v1
+  # Increase the initTimeout if Dapr is managing the Worker for you
+  initTimeout: "120s"
+  metadata:
+    # Name of the existing Cloudflare Queue (required)
+    - name: queueName
+      value: ""
+    # Name of the Worker (required)
+    - name: workerName
+      value: ""
+    # PEM-encoded private Ed25519 key (required)
+    - name: key
+      value: |
+        -----BEGIN PRIVATE KEY-----
+        MC4CAQ...
+        -----END PRIVATE KEY-----
+    # Cloudflare account ID (required to have Dapr manage the Worker)
+    - name: cfAccountID
+      value: ""
+    # API token for Cloudflare (required to have Dapr manage the Worker)
+    - name: cfAPIToken
+      value: ""
+    # URL of the Worker (required if the Worker has been pre-created outside of Dapr)
+    - name: workerUrl
+      value: ""

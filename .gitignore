@@ -1,3 +1,9 @@
+# Project specific
+
+binding.yaml
+tests.http
+daprd.exe
+
 # Logs
 logs
 *.log
