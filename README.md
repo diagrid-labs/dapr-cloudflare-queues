@@ -2,7 +2,11 @@
 
 This repository contains a sample application that demonstrates how to use [Cloudflare Queues](https://developers.cloudflare.com/queues/) and [Dapr](https://dapr.io/) to build an event-driven application.
 
+The Dapr application (*producer*) in this repository will run locally and publish a message to a Cloudflare queue. A Cloudflare worker (*consumer*) will read the message from the queue and write it to the console.
+
 ## Prerequisites
+
+The following is required to run this sample:
 
 - Install [Dapr CLI](https://docs.dapr.io/getting-started/install-dapr-cli/)
 - Use the Dapr CLI to install the Dapr runtime locally:
@@ -10,13 +14,11 @@ This repository contains a sample application that demonstrates how to use [Clou
     `dapr init`
 
 - Install [Node.js](https://nodejs.org/en/download/)
-- Install [Wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+- Install [Cloudflare Wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+- Ensure you're on a Cloudflare paid plan, since that is required to use their queues.
 - Enable Queues in the Cloudflare dashboard.
   - Dashboard > Workers > Queues
   - Enable Queues Beta
-- Use the wrangler CLI to login to Cloudflare:
-
-  `wrangler login`
 
 ## Creating the applications
 
@@ -28,13 +30,26 @@ The architecture will consists of three parts:
 
 ### Create a CloudFlare queue
 
-1. Create the Cloudflare queue using the wrangler CLI:
+1. Open a terminal and use the wrangler CLI to login to Cloudflare:
+
+    `wrangler login`
+
+2. Create the Cloudflare queue using the wrangler CLI:
 
    `wrangler queues create dapr-messages`
 
 ### Create a producer Dapr app
 
-In this scenario Dapr will manage a Cloudflare worker
+The Cloudflare binding uses a Cloudflare worker to publish messages since only Cloudflare workers can access the queue.
+
+There are two options for this worker:
+
+1. Dapr provisions the worker.
+2. You use a pre-provisioned Cloudflare worker.
+
+This sample uses option 1. Read the [Cloudflare Queues binding spec](https://v1-10.docs.dapr.io/reference/components-reference/supported-bindings/cloudflare-queues/#configuring-the-worker) if you want to go for option 2.
+
+// TODO
 
 <details>
     <summary>Creating Cloudflare API token</summary>
@@ -143,3 +158,10 @@ export default {
 5. Start a tail to read the log of the consumer worker:
 
    `wrangler tail --format=json`
+
+### More information
+
+Read about the Dapr [Cloudflare Queues bindings spec](https://v1-10.docs.dapr.io/reference/components-reference/supported-bindings/cloudflare-queues/) on the Dapr docs site.
+
+Any questions or comments about this sample? Please open an issue in this repo or post a question on the [Dapr discord](https://aka.ms/dapr-discord).
+
