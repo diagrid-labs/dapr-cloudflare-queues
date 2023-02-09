@@ -226,8 +226,8 @@ Let's have a look at the Dapr app that will send the messages to the Cloudflare 
     dapr --app-id producer --app-protocol http --app-port 5001 --resources-path ./resources -- npm run start
     ```
 
-### More information
+## More information
 
 Read about the Dapr [Cloudflare Queues bindings spec](https://v1-10.docs.dapr.io/reference/components-reference/supported-bindings/cloudflare-queues/) on the Dapr docs site.
 
-Any questions or comments about this sample? Join the [Dapr discord](https://aka.ms/dapr-discord) and join the conversation with thousands of other Dapr developers.
+Any questions or comments about this sample? Join the [Dapr discord](https://aka.ms/dapr-discord) and contact us in the `#components-contrib` channel.
