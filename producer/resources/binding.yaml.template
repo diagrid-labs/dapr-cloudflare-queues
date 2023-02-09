@@ -10,10 +10,10 @@ spec:
   metadata:
     # Name of the existing Cloudflare Queue (required)
     - name: queueName
-      value: ""
+      value: "dapr-messages"
     # Name of the Worker (required)
     - name: workerName
-      value: ""
+      value: "dapr-message-worker"
     # PEM-encoded private Ed25519 key (required)
     - name: key
       value: |
