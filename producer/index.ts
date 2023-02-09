@@ -16,10 +16,11 @@ async function publish() {
     {
         console.log(response);
     }
+    console.log("Completed.");
 }
 
 async function start() {
-    console.log("..1..");
+    console.log("Starting...");
     await publish();
 }
 
