@@ -223,7 +223,7 @@ Let's have a look at the Dapr app that will send the messages to the Cloudflare 
 2. Run the following command to start the producer app:
 
     ```bash
-    dapr --app-id producer --app-protocol http --app-port 5001 --resources-path ./resources -- npm run start
+    dapr run --app-id producer --app-protocol http --app-port 5001 --resources-path ./resources -- npm run start
     ```
 
 ## More information
