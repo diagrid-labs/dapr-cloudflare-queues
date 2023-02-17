@@ -29,7 +29,7 @@ The architecture will consists of three parts:
 2. A *consumer* Cloudflare worker that reads messages from the queue.
 3. A *producer* Dapr app that will publish messages to the queue.
 
-## 1. Create a CloudFlare queue
+## 1. Create a Cloudflare queue
 
 1. Open a terminal and use the wrangler CLI to login to Cloudflare:
 
@@ -49,7 +49,7 @@ The architecture will consists of three parts:
 
     `Created queue dapr-messages.`
 
-## 2. Create a consumer CloudFlare worker
+## 2. Create a consumer Cloudflare worker
 
 You can either create a new *consumer* worker by following steps 1-3, or use the existing *consumer* worker in this repository and continue from step 4.
 
