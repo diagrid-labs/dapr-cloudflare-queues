@@ -1,4 +1,4 @@
-# Event-driven architectures with Cloudflare queues and Dapr
+# Event-driven applications with Cloudflare queues and Dapr
 
 This repository contains a sample application that demonstrates how to use [Cloudflare Queues](https://developers.cloudflare.com/queues/) and [Dapr](https://dapr.io/) to build an event-driven application.
 
@@ -23,7 +23,7 @@ The following is required to run this sample:
 
 ## Creating the applications
 
-The architecture will consists of three parts:
+The application architecture consists of three parts:
 
 1. A Cloudflare queue
 2. A *consumer* Cloudflare worker that reads messages from the queue.
