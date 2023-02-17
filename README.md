@@ -107,7 +107,7 @@ export default {
 
 6. Start a tail to read the log of the consumer worker:
 
-   `wrangler tail --format=json`
+   `wrangler tail`
 
 ## 3. Configuring the producer Dapr app
 
@@ -188,28 +188,33 @@ Let's have a look at the Dapr app that will send the messages to the Cloudflare 
     import { DaprClient } from "@dapr/dapr";
 
     // Common settings
-    const daprHost = "127.0.0.1";
-    const daprPort = "3500";
+    const daprHost = "http://localhost";
+    const daprPort = process.env.DAPR_HTTP_PORT || "3500";
 
-    async function publish() {
+    async function main() {
+        console.log("Starting...");
+
         const bindingName = "cloudflare-queues";
         const bindingOperation = "publish";
-        const message =  { "data": "Hello World" };
-
         const client = new DaprClient(daprHost, daprPort);
-        const response = await client.binding.send(bindingName, bindingOperation, message);
-
-        if (response)
-        {
-            console.log(response);
+        for(var i = 1; i <= 10; i++) {
+            const message =  { data: "Hello World " + i };
+            const response = await client.binding.send(bindingName, bindingOperation, message);
+            if (response)
+            {
+                console.log(response);
+            }
+            await sleep(1000);
         }
+
+        console.log("Completed.");
     }
 
-    async function start() {
-        await publish();
-    }
+    async function sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
 
-    start().catch((e) => {
+    main().catch((e) => {
         console.error(e);
         process.exit(1);
     })
@@ -220,11 +225,69 @@ Let's have a look at the Dapr app that will send the messages to the Cloudflare 
 ## Run the producer app
 
 1. Open a new terminal window and navigate to the `producer` folder.
-2. Run the following command to start the producer app:
+2. Run npm install to install the dependencies:
 
     ```bash
-    dapr run --app-id producer --app-protocol http --app-port 5001 --resources-path ./resources -- npm run start
+    npm install
     ```
+
+3. Run the following command to start the producer app:
+
+    ```bash
+    dapr run --app-id producer --resources-path ./resources -- npm run start
+    ```
+
+4. The terminal that logs the tail of the consumer app should show a log statement for each of the ten messages sent:
+
+```bash
+Unknown Event - Ok @ 17/02/2023, 11:22:50
+  (log) [{"body":"{\"data\":\"Hello World 1\"}","timestamp":"2023-02-17T10:22:50.556Z","id":"8f6293d9d04001e3f2a12be5c47acde2"}]
+...
+```
+
+### Cleanup
+
+If you don't want to keep the Cloudflare workers running, you can delete them as follows:
+
+1. Disconnect the `consumer` worker from the queue:
+
+  ```bash
+  wrangler queues consumer remove dapr-messages consumer
+  ```
+
+  The response in the terminal should end with:
+  
+  ```bash
+  Removed consumer from queue dapr-messages.
+  ```
+
+2. Delete the `consumer` worker:
+
+  ```bash
+  wrangler delete consumer
+  ```
+
+   Type `Y` to confirm the deletion of the worker.
+
+  The response in the terminal should end with:
+  
+  ```bash
+  Successfully deleted consumer
+  ```
+
+3. Delete the Dapr generated `dapr-message-worker` worker:
+
+  ```bash
+  wrangler delete --name dapr-message-worker
+  ```
+
+  Type `Y` to confirm the deletion of the worker.
+
+  The response in the terminal should end with:
+  
+  ```bash
+  Successfully deleted dapr-message-worker
+  ```
 
 ## More information
 
