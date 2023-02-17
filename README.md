@@ -57,57 +57,57 @@ You can either create a new *consumer* worker by following steps 1-3, or use the
 
     `wrangler init consumer`
 
-   1. Create package.json: `Y`
-   2. Use TypeScript: `Y`
-   3. Create worker: `Fetch handler`
-   4. Write tests: `N`
+   - Create package.json: `Y`
+   - Use TypeScript: `Y`
+   - Create worker: `Fetch handler`
+   - Write tests: `N`
 
-   A new folder named *consumer* will be created which contains the worker.
+    A new folder named *consumer* will be created which contains the worker.
 
-2. Update the *consumer/src/index.ts* file to:
+1. Update the *consumer/src/index.ts* file to:
 
-```typescript
-export default {
-   async queue(
-      batch: MessageBatch<Error>,
-      env: Env
-   ): Promise<void> {
-      let messages = JSON.stringify(batch.messages);
-      console.log(`${messages}`);
-   },
-};
-```
+    ```typescript
+    export default {
+      async queue(
+          batch: MessageBatch<Error>,
+          env: Env
+      ): Promise<void> {
+          let messages = JSON.stringify(batch.messages);
+          console.log(`${messages}`);
+      },
+    };
+    ```
 
-3. Add the following lines to the *consumer/wrangler.toml* file:
+2. Add the following lines to the *consumer/wrangler.toml* file:
 
-```toml
-[[queues.consumers]]
- queue = "dapr-messages"
- max_batch_size = 1
-```
+    ```toml
+    [[queues.consumers]]
+    queue = "dapr-messages"
+    max_batch_size = 1
+    ```
 
-4. Ensure that you're in the *consumer* folder and install the dependencies:
+3. Ensure that you're in the *consumer* folder and install the dependencies:
 
-   `cd consumer`
+    `cd consumer`
 
-   `npm install`
+    `npm install`
 
-5. Publish the *consumer* worker:
+4. Publish the *consumer* worker:
 
-   `wrangler publish`
+    `wrangler publish`
 
-   The response in the terminal should end with:
+    The response in the terminal should end with:
 
-  ```
-  Published consumer (... sec)
-    https://consumer.<SUBDOMAIN>.workers.dev
-    Consumer for dapr-messages
-  Current Deployment ID: <DEPLOYMENT_ID>
-  ```
+    ```bash
+    Published consumer (... sec)
+      https://consumer.<SUBDOMAIN>.workers.dev
+      Consumer for dapr-messages
+    Current Deployment ID: <DEPLOYMENT_ID>
+    ```
 
-6. Start a tail to read the log of the consumer worker:
+5. Start a tail to read the log of the consumer worker:
 
-   `wrangler tail`
+    `wrangler tail`
 
 ## 3. Configuring the producer Dapr app
 
@@ -166,15 +166,15 @@ This sample uses option 1. Read the [Cloudflare Queues binding spec](https://v1-
 3. Follow [these instructions](https://v1-10.docs.dapr.io/reference/components-reference/supported-bindings/cloudflare-queues/#generate-an-ed25519-key-pair) in the Dapr docs to set the value for `spec.metadata.key`.
 4. The Cloudflare account ID should go in the `spec.metadata.cfAccountID` field. You can find the account ID in the Cloudflare dashboard URL: `https://dash.cloudflare.com/<ACCOUNT_ID>/workers/overview`.
 5. A Cloudflare API token should go in the `spec.metadata.cfAPIToken` field. It can be generated as follows:
-   1. In the Cloudflare dashboard, go to the Workers page.
-   2. Click the *API tokens* link
-   3. Click the *Create token* button
-   4. Click the *Use template* button for Edit Cloudflare Workers
-   5. Update the permissions to only contain:
+   - In the Cloudflare dashboard, go to the Workers page.
+   - Click the *API tokens* link
+   - Click the *Create token* button
+   - Click the *Use template* button for Edit Cloudflare Workers
+   - Update the permissions to only contain:
       - *Account* | *Worker Scripts* | *Edit*
-   6. Update the Account Resources to only contain:
+   - Update the Account Resources to only contain:
       - *Include* | *\<YOUR ACCOUNT\>*
-   7. Set a time to live (TTL) for the token, the shorter the better, if you're just testing.
+   - Set a time to live (TTL) for the token, the shorter the better, if you're just testing.
 
 Now the binding file is complete. The file is gitignored so the secrets won't be committed to the repository.
 
@@ -239,11 +239,11 @@ Let's have a look at the Dapr app that will send the messages to the Cloudflare 
 
 4. The terminal that logs the tail of the consumer app should show a log statement for each of the ten messages sent:
 
-```bash
-Unknown Event - Ok @ 17/02/2023, 11:22:50
-  (log) [{"body":"{\"data\":\"Hello World 1\"}","timestamp":"2023-02-17T10:22:50.556Z","id":"8f6293d9d04001e3f2a12be5c47acde2"}]
-...
-```
+    ```bash
+    Unknown Event - Ok @ 17/02/2023, 11:22:50
+      (log) [{"body":"{\"data\":\"Hello World 1\"}","timestamp":"2023-02-17T10:22:50.556Z","id":"8f6293d9d04001e3f2a12be5c47acde2"}]
+    ...
+    ```
 
 ## Cleanup
 
@@ -251,55 +251,55 @@ If you don't want to keep the Cloudflare workers and queue, you can delete them 
 
 1. Disconnect the `consumer` worker from the queue:
 
-  ```bash
-  wrangler queues consumer remove dapr-messages consumer
-  ```
+    ```bash
+    wrangler queues consumer remove dapr-messages consumer
+    ```
 
-  The response in the terminal should end with:
-  
-  ```bash
-  Removed consumer from queue dapr-messages.
-  ```
+    The response in the terminal should end with:
+
+    ```bash
+    Removed consumer from queue dapr-messages.
+    ```
 
 2. Delete the `consumer` worker:
 
-  ```bash
-  wrangler delete consumer
-  ```
+    ```bash
+    wrangler delete consumer
+    ```
 
-   Type `Y` to confirm the deletion of the worker.
+    Type `Y` to confirm the deletion of the worker.
 
-  The response in the terminal should end with:
-  
-  ```bash
-  Successfully deleted consumer
-  ```
+    The response in the terminal should end with:
+
+    ```bash
+    Successfully deleted consumer
+    ```
 
 3. Delete the Dapr generated `dapr-message-worker` worker:
 
-  ```bash
-  wrangler delete --name dapr-message-worker
-  ```
+    ```bash
+    wrangler delete --name dapr-message-worker
+    ```
 
-  Type `Y` to confirm the deletion of the worker.
+    Type `Y` to confirm the deletion of the worker.
 
-  The response in the terminal should end with:
+    The response in the terminal should end with:
   
-  ```bash
-  Successfully deleted dapr-message-worker
-  ```
+    ```bash
+    Successfully deleted dapr-message-worker
+    ```
 
 4. Delete the `dapr-messages` queue:
 
-  ```bash
-  wrangler queues delete dapr-messages
-  ```
+    ```bash
+    wrangler queues delete dapr-messages
+    ```
 
-  The response in the terminal should end with:
+    The response in the terminal should end with:
   
-  ```bash
-  Deleted queue dapr-messages.
-  ```
+    ```bash
+    Deleted queue dapr-messages.
+    ```
 
 ## More information
 
