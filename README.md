@@ -289,6 +289,18 @@ If you don't want to keep the Cloudflare workers running, you can delete them as
   Successfully deleted dapr-message-worker
   ```
 
+4. Delete the `dapr-messages` queue:
+
+  ```bash
+  wrangler queues delete dapr-messages
+  ```
+
+  The response in the terminal should end with:
+  
+  ```bash
+  Deleted queue dapr-messages.
+  ```
+
 ## More information
 
 Read about the Dapr [Cloudflare Queues bindings spec](https://v1-10.docs.dapr.io/reference/components-reference/supported-bindings/cloudflare-queues/) on the Dapr docs site.
