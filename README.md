@@ -245,9 +245,9 @@ Unknown Event - Ok @ 17/02/2023, 11:22:50
 ...
 ```
 
-### Cleanup
+## Cleanup
 
-If you don't want to keep the Cloudflare workers running, you can delete them as follows:
+If you don't want to keep the Cloudflare workers and queue, you can delete them as follows:
 
 1. Disconnect the `consumer` worker from the queue:
 
@@ -305,4 +305,5 @@ If you don't want to keep the Cloudflare workers running, you can delete them as
 
 Read about the Dapr [Cloudflare Queues bindings spec](https://v1-10.docs.dapr.io/reference/components-reference/supported-bindings/cloudflare-queues/) on the Dapr docs site.
 
-Any questions or comments about this sample? Join the [Dapr discord](https://aka.ms/dapr-discord) and contact us in the `#components-contrib` channel.
+Any questions or comments about this sample? Join the [Dapr discord](https://aka.ms/dapr-discord) and post a message the `#components-contrib` channel.
+Have you made something with Cloudflare and Dapr? Post a message in the `#show-and-tell` channel, we love to see your creations!
