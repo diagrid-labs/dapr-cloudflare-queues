@@ -4,6 +4,8 @@ This repository contains a sample application that demonstrates how to use [Clou
 
 The Dapr application (*producer*) in this repository will run locally and publish a message to a Cloudflare queue. A Cloudflare worker (*consumer*) will read the message from the queue and write it to the console.
 
+![Dapr to Cloudflare](images/cloudflare-queues-v1.png)
+
 ## Prerequisites
 
 The following is required to run this sample:
@@ -244,6 +246,8 @@ Let's have a look at the Dapr app that will send the messages to the Cloudflare 
       (log) [{"body":"{\"data\":\"Hello World 1\"}","timestamp":"2023-02-17T10:22:50.556Z","id":"8f6293d9d04001e3f2a12be5c47acde2"}]
     ...
     ```
+
+![Wrangler log tail](images/log_tail_consumer.gif)
 
 ## Cleanup
 
