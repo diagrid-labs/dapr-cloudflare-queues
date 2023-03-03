@@ -131,7 +131,7 @@ This sample uses option 1. Read the [Cloudflare Queues binding spec](https://v1-
     apiVersion: dapr.io/v1alpha1
     kind: Component
     metadata:
-      name: <NAME>
+      name: cloudflare-queues
     spec:
       type: bindings.cloudflare.queues
       version: v1
