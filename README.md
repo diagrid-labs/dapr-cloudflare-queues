@@ -75,7 +75,7 @@ You can either create a new *consumer* worker by following steps 1-3, or use the
           env: Env
       ): Promise<void> {
           let messages = JSON.stringify(batch.messages);
-          console.log(`${messages}`);
+          console.log(messages);
       },
     };
     ```

@@ -17,6 +17,6 @@ export default {
 		env: Env
 	): Promise<void> {
 		let messages = JSON.stringify(batch.messages);
-		console.log(`${messages}`);
+		console.log(messages);
 	},
 };
