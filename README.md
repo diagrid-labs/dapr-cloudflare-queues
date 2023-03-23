@@ -66,7 +66,7 @@ You can either create a new *consumer* worker by following steps 1-3, or use the
 
     A new folder named *consumer* will be created which contains the worker.
 
-1. Update the *consumer/src/index.ts* file to:
+2. Update the *consumer/src/index.ts* file to:
 
     ```typescript
     export default {
@@ -80,7 +80,7 @@ You can either create a new *consumer* worker by following steps 1-3, or use the
     };
     ```
 
-2. Add the following lines to the *consumer/wrangler.toml* file:
+3. Add the following lines to the *consumer/wrangler.toml* file:
 
     ```toml
     [[queues.consumers]]
@@ -88,13 +88,13 @@ You can either create a new *consumer* worker by following steps 1-3, or use the
     max_batch_size = 1
     ```
 
-3. Ensure that you're in the *consumer* folder and install the dependencies:
+4. Ensure that you're in the *consumer* folder and install the dependencies:
 
     `cd consumer`
 
     `npm install`
 
-4. Publish the *consumer* worker:
+5. Publish the *consumer* worker:
 
     `wrangler publish`
 
@@ -107,7 +107,7 @@ You can either create a new *consumer* worker by following steps 1-3, or use the
     Current Deployment ID: <DEPLOYMENT_ID>
     ```
 
-5. Start a tail to read the log of the consumer worker:
+6. Start tailing the log of the consumer worker:
 
     `wrangler tail`
 
